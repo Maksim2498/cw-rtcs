@@ -51,7 +51,7 @@ export default class Sensor {
         if (state === this.publishedState)
             return
 
-        this.logger?.debug(`Публикация состояния (${state}) сенсора "${this.name}"...`)
+        this.logger?.debug(`Публикация состояния (${state}) датчика "${this.name}"...`)
         await publishState(this.client, this.topic, this.state)
         this.logger?.debug("Успешно")
 

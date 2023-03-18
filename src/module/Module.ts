@@ -51,11 +51,13 @@ export default class Module {
             switch (stream) {
                 case Module.MIN_TOPIC:
                     this._minState = parseState(message)
+                    this.logger?.debug(`Состояние датчика "min" изменилось на ${this.minState}`)
                     this.updatePumpState()
                     break
 
                 case Module.MAX_TOPIC:
                     this._maxState = parseState(message)
+                    this.logger?.debug(`Состояние датчика "max" изменилось на ${this.maxState}`)
                     this.updatePumpState()
             }
         })
