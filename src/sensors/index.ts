@@ -1,11 +1,11 @@
-import mqtt                            from "async-mqtt"
-import Tank                            from "./Tank"
-import Sensor                          from "./Sensor"
-import Pump                            from "./Pump"
+import Tank                    from "./Tank"
+import Sensor                  from "./Sensor"
+import Pump                    from "./Pump"
 
-import { getAddress, addressToString } from "util/address"
-import { createLogger                } from "util/logger"
-import { getSetup                    } from "./setup"
+import { getAddress          } from "util/address"
+import { connect, disconnect } from "util/client"
+import { createLogger        } from "util/logger"
+import { getSetup            } from "./setup"
 
 const logger = createLogger()
 
@@ -24,7 +24,7 @@ async function main() {
     const tank      = new Tank(current)
     const pump      = new Pump({ tank, rate: drainRate, logger })
     const address   = getAddress()
-    const client    = await connect()
+    const client    = await connect(address, logger)
     const minSensor = new Sensor({ name: "min", value: min, tank, client, logger })
     const maxSensor = new Sensor({ name: "max", value: max, tank, client, logger })
 
@@ -35,14 +35,6 @@ async function main() {
 
     setupUpdate()
     setupSigInt()
-
-    async function connect(): Promise<mqtt.AsyncClient> {
-        const addressString = addressToString(address)
-        logger.debug(`Подключение к ${addressString}...`)
-        const client = await mqtt.connectAsync(addressString)
-        logger.debug("Успешно")
-        return client
-    }
 
     function setupUpdate() {
         setInterval(update, tick)
@@ -65,19 +57,13 @@ async function main() {
             console.log()
 
             try {
-                await disconnect()
+                await disconnect(client, logger)
             } catch (error) {
                 console.error(error)
             }
 
             process.exit()
         })
-    }
-
-    async function disconnect() {
-        logger.debug("Отключение...")
-        await client.end()
-        logger.debug("Успешно")
     }
 }
 
