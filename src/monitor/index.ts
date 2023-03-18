@@ -16,8 +16,8 @@ async function main() {
     const client  = await connect(address, logger)
 
     subscribe(client, PUMP_TOPIC, logger)
-    subscribe(client, MIN_TOPIC, logger)
-    subscribe(client, MAX_TOPIC, logger)
+    subscribe(client, MIN_TOPIC,  logger)
+    subscribe(client, MAX_TOPIC,  logger)
 
     client.on("message", (stream, message) => {
         switch (stream) {
