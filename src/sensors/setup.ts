@@ -5,7 +5,7 @@ export const DEFAULT_FILL_RATE  = 10
 export const DEFAULT_DRAIN_RATE = 20
 export const DEFAULT_TICK       = 1000
 
-export const MIN_LIMIT = 1
+export const MIN_LIMIT = 20
 export const MAX_LIMIT = 100
 
 interface Setup {
