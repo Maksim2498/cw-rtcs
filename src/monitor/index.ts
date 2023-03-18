@@ -1,15 +1,15 @@
-import { createLogger } from "util/logger";
+import { getAddress           } from "util/address";
+import { connect, setupSigInt } from "util/client";
+import { processError         } from "util/error";
+import { createLogger         } from "util/logger";
 
 const logger = createLogger()
 
-main().catch(processError)
+main().catch(error => processError(error, logger))
 
 async function main() {
-    
-}
+    const address = getAddress()
+    const client  = await connect(address, logger)
 
-function processError(error: any) {
-    logger.error(error)
-    logger.info("Отмена...")
-    process.exit(1)
+    setupSigInt(client, logger)
 }

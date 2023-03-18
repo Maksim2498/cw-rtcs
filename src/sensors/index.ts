@@ -1,15 +1,16 @@
-import Tank                    from "./Tank"
-import Sensor                  from "./Sensor"
-import Pump                    from "./Pump"
+import Tank                     from "./Tank"
+import Sensor                   from "./Sensor"
+import Pump                     from "./Pump"
 
-import { getAddress          } from "util/address"
-import { connect, disconnect } from "util/client"
-import { createLogger        } from "util/logger"
-import { getSetup            } from "./setup"
+import { getAddress           } from "util/address"
+import { connect, setupSigInt } from "util/client"
+import { processError         } from "util/error"
+import { createLogger         } from "util/logger"
+import { getSetup             } from "./setup"
 
 const logger = createLogger()
 
-main().catch(processError)
+main().catch(error => processError(error, logger))
 
 async function main() {
     const {
@@ -34,7 +35,7 @@ async function main() {
     await pump.subscribe(client)
 
     setupUpdate()
-    setupSigInt()
+    setupSigInt(client, logger)
 
     function setupUpdate() {
         setInterval(update, tick)
@@ -45,30 +46,4 @@ async function main() {
         tank.current += rate
         logger.info(`Текущий уровень: ${tank.current}`)
     }
-
-    function setupSigInt() {
-        let stopping = false
-
-        process.on("SIGINT", async () => {
-            if (stopping)
-                return
-
-            stopping = true
-            console.log()
-
-            try {
-                await disconnect(client, logger)
-            } catch (error) {
-                console.error(error)
-            }
-
-            process.exit()
-        })
-    }
-}
-
-function processError(error: any) {
-    logger.error(error)
-    logger.info("Отмена...")
-    process.exit(1)
 }

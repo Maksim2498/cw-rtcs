@@ -10,6 +10,26 @@ export async function connect(address: Address, logger?: Logger) {
     return client
 }
 
+export function setupSigInt(client: AsyncMqttClient, logger?: Logger) {
+    let stopping = false
+
+    process.on("SIGINT", async () => {
+        if (stopping)
+            return
+
+        stopping = true
+        console.log()
+
+        try {
+            await disconnect(client, logger)
+        } catch (error) {
+            logger?.error(error)
+        }
+
+        process.exit()
+    })
+}
+
 export async function disconnect(client: AsyncMqttClient, logger?: Logger) {
     logger?.debug("Отключение...")
     await client.end()
