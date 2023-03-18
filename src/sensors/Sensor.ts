@@ -53,9 +53,9 @@ export default class Sensor {
         const json    = { state }
         const message = JSON.stringify(json)
 
-        this.logger?.debug(`Publishing state (${state}) of sensor "${this.name}"...`)
+        this.logger?.debug(`Публикация состояния (${state}) сенсора "${this.name}"...`)
         await this.client.publish(this.topic, message)
-        this.logger?.debug("Published")
+        this.logger?.debug("Успешно")
 
         this.publishedState = state
     }

@@ -44,9 +44,9 @@ export default class Pump {
     }
 
     async subscribe(client: AsyncMqttClient) {
-        this.logger?.debug(`Subscribing to ${Pump.TOPIC}...`)
+        this.logger?.debug(`Подписка на канал ${Pump.TOPIC}...`)
         await client.subscribe(Pump.TOPIC)
-        this.logger?.debug("Subscribed")
+        this.logger?.debug("Успешно")
 
         client.on("message", (topic, message) => {
             if (topic !== Pump.TOPIC)

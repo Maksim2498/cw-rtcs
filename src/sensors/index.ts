@@ -38,9 +38,9 @@ async function main() {
 
     async function connect(): Promise<mqtt.AsyncClient> {
         const addressString = addressToString(address)
-        logger.debug(`Connecting to ${addressString}...`)
+        logger.debug(`Подключение к ${addressString}...`)
         const client = await mqtt.connectAsync(addressString)
-        logger.debug("Connected")
+        logger.debug("Успешно")
         return client
     }
 
@@ -51,7 +51,7 @@ async function main() {
     function update() {
         const rate = fillRate - pump.realRate
         tank.current += rate
-        logger.info(`Current level: ${tank.current}`)
+        logger.info(`Текущий уровень: ${tank.current}`)
     }
 
     function setupSigInt() {
@@ -75,14 +75,14 @@ async function main() {
     }
 
     async function disconnect() {
-        logger.debug("Disconnecting...")
+        logger.debug("Отключение...")
         await client.end()
-        logger.debug("Disconnected")
+        logger.debug("Успешно")
     }
 }
 
 function processError(error: any) {
     logger.error(error)
-    logger.info("Aborting...")
+    logger.info("Отмена...")
     process.exit(1)
 }
