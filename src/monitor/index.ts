@@ -1,7 +1,7 @@
-import { getAddress, parseState          } from "util/address";
-import { connect, setupSigInt, subscribe } from "util/client";
-import { processError                    } from "util/error";
-import { createLogger                    } from "util/logger";
+import { getAddress                                  } from "util/address";
+import { connect, setupSigInt, subscribe, parseState } from "util/client";
+import { processError                                } from "util/error";
+import { createLogger                                } from "util/logger";
 
 const PUMP_TOPIC = "act/pump"
 const MIN_TOPIC  = "sen/min"

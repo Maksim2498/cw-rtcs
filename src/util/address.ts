@@ -40,11 +40,3 @@ export function getPort(): number {
 export function addressToString(address: Address): string {
     return `mqtt://${address.host}:${address.port}`
 }
-
-export function parseState(message: Buffer): boolean {
-    const text  = message.toString()
-    const json  = JSON.parse(text)
-    const state =  !!json.state
-
-    return state
-}

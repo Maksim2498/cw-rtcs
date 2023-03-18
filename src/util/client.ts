@@ -47,4 +47,13 @@ export async function subscribe(client: AsyncMqttClient, topic: string, logger?:
     logger?.debug(`Подписка на канал ${topic}...`)
     await client.subscribe(topic)
     logger?.debug("Успешно")
+
+}
+
+export function parseState(message: Buffer): boolean {
+    const text  = message.toString()
+    const json  = JSON.parse(text)
+    const state =  !!json.state
+
+    return state
 }

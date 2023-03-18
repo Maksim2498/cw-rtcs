@@ -1,9 +1,8 @@
-import Tank                from "./Tank";
+import Tank                      from "./Tank";
 
-import { AsyncMqttClient } from "async-mqtt";
-import { Logger          } from "winston";
-import { parseState      } from "util/address";
-import { subscribe       } from "util/client";
+import { AsyncMqttClient       } from "async-mqtt";
+import { Logger                } from "winston";
+import { subscribe, parseState } from "util/client";
 
 export interface CreationOptions {
     readonly tank:    Tank
