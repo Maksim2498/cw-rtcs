@@ -35,3 +35,10 @@ export async function disconnect(client: AsyncMqttClient, logger?: Logger) {
     await client.end()
     logger?.debug("Успешно")
 }
+
+export async function publishState(client: AsyncMqttClient, topic: string, state: boolean) {
+    const json    = { state }
+    const message = JSON.stringify(json)
+
+    await client.publish(topic, message)
+}

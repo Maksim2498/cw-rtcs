@@ -2,6 +2,7 @@ import Tank                from "./Tank"
 
 import { AsyncMqttClient } from "async-mqtt"
 import { Logger          } from "winston"
+import { publishState    } from "util/client"
 
 export interface CreationOptions {
     readonly name:    string
@@ -50,11 +51,8 @@ export default class Sensor {
         if (state === this.publishedState)
             return
 
-        const json    = { state }
-        const message = JSON.stringify(json)
-
         this.logger?.debug(`Публикация состояния (${state}) сенсора "${this.name}"...`)
-        await this.client.publish(this.topic, message)
+        await publishState(this.client, this.topic, this.state)
         this.logger?.debug("Успешно")
 
         this.publishedState = state
