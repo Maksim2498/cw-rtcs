@@ -2,6 +2,7 @@ import Tank                from "./Tank";
 
 import { AsyncMqttClient } from "async-mqtt";
 import { Logger          } from "winston";
+import { parseState      } from "util/address";
 
 export interface CreationOptions {
     readonly tank:    Tank
@@ -52,11 +53,7 @@ export default class Pump {
             if (topic !== Pump.TOPIC)
                 return
 
-            const text  = message.toString()
-            const json  = JSON.parse(text)
-            const state = !!json.state
-
-            this._state = state
+            this._state = parseState(message)
         })
     }
 }
