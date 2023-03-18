@@ -21,10 +21,10 @@ export default class Pump {
 
     constructor(options: CreationOptions) {
         if (isNaN(options.rate))
-            throw new Error(`rate is NaN`)
+            throw new Error(`rate не является числом`)
 
         if (options.rate < 0)
-            throw new Error(`rate must not be negative (${options.rate})`)
+            throw new Error(`rate не должно быть отрицательным (${options.rate})`)
 
         this.tank   = options.tank
         this.rate   = options.rate

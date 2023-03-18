@@ -3,11 +3,16 @@ import { Logger                        } from "winston";
 import { Address, addressToString      } from "./address";
 
 export async function connect(address: Address, logger?: Logger) {
-    const addressString = addressToString(address)
-    logger?.debug(`Подключение к ${addressString}...`)
-    const client = await connectAsync(addressString)
-    logger?.debug("Успешно")
-    return client
+    try {
+        const addressString = addressToString(address)
+        logger?.debug(`Подключение к ${addressString}...`)
+        const client = await connectAsync(addressString)
+        logger?.debug("Успешно")
+        return client
+    } catch (error) {
+        console.error(error)
+        throw new Error("Не удалось подключится", { cause: error })
+    }
 }
 
 export function setupSigInt(client: AsyncMqttClient, logger?: Logger) {
@@ -32,7 +37,13 @@ export function setupSigInt(client: AsyncMqttClient, logger?: Logger) {
 
 export async function disconnect(client: AsyncMqttClient, logger?: Logger) {
     logger?.debug("Отключение...")
-    await client.end()
+
+    try {
+        await client.end()
+    } catch (error) {
+        throw new Error("Не удалось правильно отключится", { cause: error })
+    }
+
     logger?.debug("Успешно")
 }
 
@@ -40,20 +51,33 @@ export async function publishState(client: AsyncMqttClient, topic: string, state
     const json    = { state }
     const message = JSON.stringify(json)
 
-    await client.publish(topic, message)
+    try {
+        await client.publish(topic, message)
+    } catch (error) {
+        throw new Error("Не удалось опубликовать состояние", { cause: error })
+    }
 }
 
 export async function subscribe(client: AsyncMqttClient, topic: string, logger?: Logger) {
     logger?.debug(`Подписка на канал ${topic}...`)
-    await client.subscribe(topic)
-    logger?.debug("Успешно")
 
+    try {
+        await client.subscribe(topic)
+    } catch (error) {
+        throw new Error(`Не удалось подключится к каналу ${topic}`, { cause: error })
+    }
+
+    logger?.debug("Успешно")
 }
 
 export function parseState(message: Buffer): boolean {
-    const text  = message.toString()
-    const json  = JSON.parse(text)
-    const state =  !!json.state
+    try {
+        const text  = message.toString()
+        const json  = JSON.parse(text)
+        const state =  !!json.state
 
-    return state
+        return state
+    } catch {
+        return false
+    }
 }

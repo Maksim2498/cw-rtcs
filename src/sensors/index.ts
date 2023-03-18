@@ -44,6 +44,6 @@ async function main() {
     function update() {
         const rate = fillRate - pump.realRate
         tank.current += rate
-        logger.info(`Текущий уровень: ${tank.current}`)
+        logger.info(`Текущий уровень воды: ${tank.current}`)
     }
 }

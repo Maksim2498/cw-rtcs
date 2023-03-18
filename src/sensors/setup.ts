@@ -44,13 +44,13 @@ export function getMin(): number {
     const min = Number(raw)
 
     if (isNaN(min))
-        throw new Error(`MIN is NaN (${raw})`)
+        throw new Error(`MIN не является числом (${raw})`)
 
     if (min < MIN_LIMIT)
-        throw new Error(`MIN must be greater than or equal to ${MIN_LIMIT} but it't ${min}`)
+        throw new Error(`MIN должно быть больше или равно ${MIN_LIMIT}, но оно равно ${min}`)
 
     if (min > MAX_LIMIT)
-        throw new Error(`MIN must be lower than or equal to ${MAX_LIMIT} but it't ${min}`)
+        throw new Error(`MIN должно быть меньше или равно ${MAX_LIMIT}, но оно равно ${min}`)
 
     return min
 }
@@ -64,13 +64,13 @@ export function getMax(min: number): number {
     const max = Number(raw)
 
     if (isNaN(max))
-        throw new Error(`MAX is NaN (${raw})`)
+        throw new Error(`MAX не является числом (${raw})`)
 
     if (max < min)
-        throw new Error(`MAX must be greater than or equal to MIN (${min}) but it't ${max}`)
+        throw new Error(`MAX должно быть больше или равн MIN (${min}), но оно равно ${max}`)
 
     if (max > MAX_LIMIT)
-        throw new Error(`MAX must be lower than or equal to ${MAX_LIMIT} but it't ${max}`)
+        throw new Error(`MAX должно быть меньше или равно ${MAX_LIMIT}, но оно равно ${max}`)
 
     return max
 }
@@ -84,13 +84,13 @@ export function getCurrent(): number {
     const current = Number(raw)
 
     if (isNaN(current))
-        throw new Error(`CURRENT is NaN (${raw})`)
+        throw new Error(`CURRENT является числом (${raw})`)
 
     if (current < DEFAULT_MIN)
-        throw new Error(`CURRENT must be greater than or equal to ${DEFAULT_MIN} but it't ${current}`)
+        throw new Error(`CURRENT должно быть больше или равно ${MIN_LIMIT}, но оно равно ${current}`)
 
     if (current > DEFAULT_MAX)
-        throw new Error(`CURRENT must be lower than or equal to ${DEFAULT_MAX} but it't ${current}`)
+        throw new Error(`CURRENT должно быть меньше или равно ${MAX_LIMIT}, но оно равно ${current}`)
 
     return current
 }
@@ -104,10 +104,10 @@ export function getFillRate(): number {
     const fillRate = Number(raw)
 
     if (isNaN(fillRate))
-        throw new Error(`FILL_RATE is NaN (${raw})`)
+        throw new Error(`FILL_RATE не является числом (${raw})`)
 
     if (fillRate <= 0)
-        throw new Error(`FILL_RATE must be positive (${fillRate})`)
+        throw new Error(`FILL_RATE должно быть положительным (${fillRate})`)
 
     return fillRate
 }
@@ -121,10 +121,10 @@ export function getDrainRate(): number {
     const drainRate = Number(raw)
 
     if (isNaN(drainRate))
-        throw new Error(`DRAIN_RATE is NaN (${raw})`)
+        throw new Error(`DRAIN_RATE не является числом (${raw})`)
 
     if (drainRate <= 0)
-        throw new Error(`DRAIN_RATE must be positive (${drainRate})`)
+        throw new Error(`DRAIN_RATE должно быть положительным (${drainRate})`)
 
     return drainRate
 }
@@ -138,10 +138,10 @@ export function getTick(): number {
     const tick = Number(raw)
 
     if (isNaN(tick))
-        throw new Error(`TICK is NaN (${raw})`)
+        throw new Error(`TICK не является числом (${raw})`)
 
     if (tick <= 0)
-        throw new Error(`TICK must be positive (${tick})`)
+        throw new Error(`TICK должно быть положительным (${tick})`)
 
     return tick
 }

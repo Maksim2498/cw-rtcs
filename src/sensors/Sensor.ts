@@ -25,10 +25,10 @@ export default class Sensor {
 
     constructor(options: CreationOptions) {
         if (isNaN(options.value))
-            throw new Error(`value is NaN`)
+            throw new Error(`value не является числом`)
 
         if (options.value < 0)
-            throw new Error(`value must not be negative (${options.value})`)
+            throw new Error(`value не должно быть отрицательным (${options.value})`)
 
         this.name     = options.name
         this.topic    = `sen/${options.name}`

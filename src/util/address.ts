@@ -14,7 +14,7 @@ export function getAddress(): Address {
 }
 
 export function getHost(): string {
-    return process.env.HOST ?? DEFAULT_HOST
+    return process.env.HOST?.trim() ?? DEFAULT_HOST
 }
 
 export function getPort(): number {
@@ -26,13 +26,13 @@ export function getPort(): number {
     const port = Number(raw)
 
     if (isNaN(port))
-        throw new Error(`PORT is not a number (${raw})`)
+        throw new Error(`PORT не является числом (${raw})`)
 
     if (!Number.isInteger(port))
-        throw new Error(`PORT must be an interger (${raw})`)
+        throw new Error(`PORT должен быть целым числом (${raw})`)
 
     if (port < 0 || port > 65535)
-        throw new Error(`PORT is out of range (${raw})`)
+        throw new Error(`PORT за пределами диапазона доступных портов (${raw})`)
 
     return port
 }
