@@ -3,6 +3,7 @@ import Tank                from "./Tank";
 import { AsyncMqttClient } from "async-mqtt";
 import { Logger          } from "winston";
 import { parseState      } from "util/address";
+import { subscribe       } from "util/client";
 
 export interface CreationOptions {
     readonly tank:    Tank
@@ -45,9 +46,7 @@ export default class Pump {
     }
 
     async subscribe(client: AsyncMqttClient) {
-        this.logger?.debug(`Подписка на канал ${Pump.TOPIC}...`)
-        await client.subscribe(Pump.TOPIC)
-        this.logger?.debug("Успешно")
+        subscribe(client, Pump.TOPIC, this.logger)
 
         client.on("message", (topic, message) => {
             if (topic !== Pump.TOPIC)

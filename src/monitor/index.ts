@@ -1,7 +1,7 @@
-import { getAddress, parseState } from "util/address";
-import { connect, setupSigInt   } from "util/client";
-import { processError           } from "util/error";
-import { createLogger           } from "util/logger";
+import { getAddress, parseState          } from "util/address";
+import { connect, setupSigInt, subscribe } from "util/client";
+import { processError                    } from "util/error";
+import { createLogger                    } from "util/logger";
 
 const PUMP_TOPIC = "act/pump"
 const MIN_TOPIC  = "sen/min"
@@ -15,9 +15,9 @@ async function main() {
     const address = getAddress()
     const client  = await connect(address, logger)
 
-    client.subscribe(PUMP_TOPIC)
-    client.subscribe(MIN_TOPIC)
-    client.subscribe(MAX_TOPIC)
+    subscribe(client, PUMP_TOPIC, logger)
+    subscribe(client, MIN_TOPIC, logger)
+    subscribe(client, MAX_TOPIC, logger)
 
     client.on("message", (stream, message) => {
         switch (stream) {

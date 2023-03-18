@@ -42,3 +42,9 @@ export async function publishState(client: AsyncMqttClient, topic: string, state
 
     await client.publish(topic, message)
 }
+
+export async function subscribe(client: AsyncMqttClient, topic: string, logger?: Logger) {
+    logger?.debug(`Подписка на канал ${topic}...`)
+    await client.subscribe(topic)
+    logger?.debug("Успешно")
+}
