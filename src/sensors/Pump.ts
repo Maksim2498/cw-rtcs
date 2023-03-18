@@ -54,6 +54,8 @@ export default class Pump {
                 return
 
             this._state = parseState(message)
+
+            this.logger?.debug(`Получено новое состояние насоса: ${this.state}`)
         })
     }
 }
