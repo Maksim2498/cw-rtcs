@@ -2,7 +2,7 @@ export const DEFAULT_MIN        = 1
 export const DEFAULT_MAX        = 100
 export const DEFAULT_CURRENT    = 0
 export const DEFAULT_FILL_RATE  = 10
-export const DEFAULT_DRAIN_RATE = 10
+export const DEFAULT_DRAIN_RATE = 20
 export const DEFAULT_TICK       = 1000
 
 export const MIN_LIMIT = 1
