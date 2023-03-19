@@ -1,9 +1,11 @@
-import winston, { Logger } from "winston"
+import winston    from "winston"
+
+import { Logger } from "winston"
+
+const Console = winston.transports.Console
+const fmt     = winston.format
 
 export function createLogger(): Logger {
-    const Console = winston.transports.Console
-    const fmt     = winston.format
-
     return winston.createLogger({
         level:             process.env.NODE_ENV === "production" ? "info" : "debug",
         transports:        [new Console()],
