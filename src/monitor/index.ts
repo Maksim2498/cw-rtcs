@@ -21,16 +21,22 @@ async function main() {
 
     client.on("message", (stream, message) => {
         switch (stream) {
-            case PUMP_TOPIC:
-                logger.info(`Состояние насоса: ${parseState(message)}`)
+            case PUMP_TOPIC: {
+                const state = parseState(message)
+                logger.info(state ? "Насос включён" : "Насос выключен")
                 break
+            }
 
-            case MIN_TOPIC:
-                logger.info(`Состояние сенсора минимального уровня: ${parseState(message)}`)
+            case MIN_TOPIC: {
+                const state = parseState(message)
+                logger.info(state ? "Датчик нижнего уровня воды активен" : "Датчик нижнего уровня воды не активен")
                 break
+            }
 
-            case MAX_TOPIC:
-                logger.info(`Состояние сенсора максимального уровня: ${parseState(message)}`)
+            case MAX_TOPIC: {
+                const state = parseState(message)
+                logger.info(state ? "Датчик верхнего уровня воды активен" : "Датчик вернхнего уровня воды не активен")
+            }
         }
     })
 
