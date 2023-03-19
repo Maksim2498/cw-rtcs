@@ -5,7 +5,7 @@ export interface TankEventEmitter extends EventEmitter {
 }
 
 export default class Tank extends    EventEmitter
-                          implements TankEventEmitter{
+                          implements TankEventEmitter {
     private _current: number = 0
 
     constructor(current: number = 0) {
